@@ -1,6 +1,6 @@
 # Ruby on Rails: Level II
 
-## User Acounts: Model
+## User Accounts: Model
 
 ```shell
 rails g resource user name email password:digest
