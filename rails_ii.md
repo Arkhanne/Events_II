@@ -39,3 +39,19 @@ rails db:migrate
   SQL (0.3ms)  INSERT INTO "users" ("name", "email", "password_digest", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)  [["name", "Mike"], ["email", "mike@example.com"], ["password_digest", "$2a$10$T.sfDKcLksiJvPnn4nfkLOVprOcVBrZsGT9zXUYpWV1XY4nqXhnSi"], ["created_at", "2018-11-26 11:39:22.734016"], ["updated_at", "2018-11-26 11:39:22.734016"]]
  => true
 ```
+
+## Sign In: Part I
+
+ ```ruby
+ # Add "resources :session" to routes.rb
+ Rails.application.routes.draw do
+  resource :session
+
+  get "signup" => "users#new"
+  resources :users
+  root "events#index"
+  resources :events do
+    resources :registrations
+  end
+end
+ ```
