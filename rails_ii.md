@@ -55,4 +55,71 @@ rails db:migrate
   end
 end
  ```
- 
+
+## Authoritation: Part I
+
+```ruby
+class UsersController < ApplicationController
+  before_action :require_signin, except: [:new, :create]
+
+  ...
+
+end
+
+class ApplicationController < ActionController::Base
+  protect_from_forgery with: :exception
+
+  private
+
+  def require_signin
+    unless current_user
+      redirect_to new_session_url, alert: 'Please sign in first!'
+    end
+  end
+
+  def current_user
+    User.find(session[:user_id]) if session[:user_id]
+  end
+
+  helper_method :current_user
+end
+
+class ApplicationController < ActionController::Base
+  
+  ...
+
+  private
+
+  def require_signin
+    unless current_user
+      redirect_to new_session_url, alert: 'Please sign in first!'
+    end
+  end
+
+  ...
+
+end
+```
+
+## Authoritation: Part II
+
+```ruby
+class UsersController < ApplicationController
+  before_action :require_signin, except: [:new, :create]
+  before_action :require_correct_user, only: [:edit, :update, :destroy]
+  
+  ...
+
+  private
+
+  def require_correct_user
+    @user = User.find(params[:id])
+    unless current_user == @user
+      redirect_to root_url
+    end
+  end
+
+  ...
+
+end
+```
