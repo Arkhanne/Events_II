@@ -128,3 +128,40 @@ end
 
 ![TA](app/assets/images/ThroughAssociations.png)
 ![TA2](app/assets/images/ThroughAssociations_II.png)
+
+## Action-Specific Layout Content
+
+### To put some content in the side bar
+
+```ruby
+# show.html.erb --> Sorrodnd the content with "content_for"
+
+...
+
+<% content_for(:side) do %>
+  <% if @likers.any? %>
+    <h3>Likers</h3>
+    <ul>
+      <% @likers.each do |user| %>
+        <li>
+          <%= link_to user.name, user %>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+<% end %>
+
+... 
+
+```
+
+```ruby
+# _sidebar.html.erb --> Show the content
+
+...
+
+<%= content_for(:side) %>
+
+...
+
+```
