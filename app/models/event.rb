@@ -13,6 +13,8 @@ class Event < ApplicationRecord
   }
 
   has_many :registrations, dependent: :destroy
+  has_many :likes, dependent: :destroy
+  has_many :likers, through: :likes, source: :user
 
   def self.upcoming
     where('starts_at >= ?', Time.now).order(:starts_at)

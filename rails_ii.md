@@ -123,3 +123,8 @@ class UsersController < ApplicationController
 
 end
 ```
+
+## Through Associations
+
+![TA](app/assets/images/ThroughAssociations.png)
+![TA2](app/assets/images/ThroughAssociations_II.png)
