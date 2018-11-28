@@ -15,6 +15,8 @@ class Event < ApplicationRecord
   has_many :registrations, dependent: :destroy
   has_many :likes, dependent: :destroy
   has_many :likers, through: :likes, source: :user
+  has_many :categorizations, dependent: :destroy
+  has_many :categories, through: :categorizations
 
   def self.upcoming
     where('starts_at >= ?', Time.now).order(:starts_at)
@@ -31,7 +33,7 @@ class Event < ApplicationRecord
       capacity - registrations.size
     end
   end
-  
+
   def sold_out?
     spots_left.zero?
   end
