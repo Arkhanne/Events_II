@@ -165,3 +165,7 @@ end
 ...
 
 ```
+
+## Scopes
+
+![Scopes](app/assets/images/Scopes.png)
