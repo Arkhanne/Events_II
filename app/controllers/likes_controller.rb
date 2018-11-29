@@ -8,7 +8,7 @@ class LikesController < ApplicationController
   end
 
   def destroy
-    like = current_user.likes.find(params[:id])
+    like = current_user.likes.find_by!(slug: params[:id])
     like.destroy
 
     redirect_to @event, notice: "Sorry!"
