@@ -21,7 +21,7 @@ class Event < ApplicationRecord
   scope :past, -> { where('starts_at < ?', Time.now).order(:starts_at) }
   scope :upcoming, -> { where('starts_at >= ?', Time.now).order(:starts_at) }
   scope :free, -> { upcoming.where(price: 0).order(:name) }
-  scope :recent, ->(max=3) { past.limit(max) }
+  scope :recent, ->(max  = 3) { past.limit(max) }
 
   # def self.past
   #   where('starts_at < ?', Time.now).order(:starts_at)

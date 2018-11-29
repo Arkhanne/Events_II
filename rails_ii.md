@@ -169,3 +169,105 @@ end
 ## Scopes
 
 ![Scopes](app/assets/images/Scopes.png)
+
+# Custom Routes
+
+![CR](app/assets/images/CustomRoutes.png)
+
+```ruby
+Rails.application.routes.draw do
+  resources :categories
+  resource :session
+ 
+  get "signup" => "users#new"
+  resources :users
+ 
+  root "events#index"
+ 
+  get "events/past" => "events#index", scope: "past"
+  get "events/free" => "events#index", scope: "free"
+  
+  resources :events do
+    resources :registrations
+    resources :likes
+  end
+end
+```
+
+```ruby
+Rails.application.routes.draw do
+  resources :categories
+  resource :session
+
+  get 'signup' => 'users#new'
+  resources :users
+
+  root 'events#index'
+
+  %w[past free].each do |scope|
+    get "events/#{scope}" => 'events#index', scope: scope
+  end
+
+  resources :events do
+    resources :registrations
+    resources :likes
+  end
+end
+```
+
+```ruby
+Rails.application.routes.draw do
+  resources :categories
+  resource :session
+
+  get 'signup' => 'users#new'
+  resources :users
+
+  root 'events#index'
+
+  get "events/:scope" => 'events#index'
+
+  resources :events do
+    resources :registrations
+    resources :likes
+  end
+end
+```
+
+```ruby
+Rails.application.routes.draw do
+  resources :categories
+  resource :session
+
+  get 'signup' => 'users#new'
+  resources :users
+
+  root 'events#index'
+
+  get "events/:scope" => 'events#index', constraints: { scope: /past|free/}
+
+  resources :events do
+    resources :registrations
+    resources :likes
+  end
+end
+```
+
+```ruby
+Rails.application.routes.draw do
+  resources :categories
+  resource :session
+
+  get 'signup' => 'users#new'
+  resources :users
+
+  root 'events#index'
+
+  get "events/filter/:scope" => 'events#index'
+
+  resources :events do
+    resources :registrations
+    resources :likes
+  end
+end
+```
